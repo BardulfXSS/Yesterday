@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yesterday/text/text.dart' show TitleText;
 
@@ -18,8 +19,11 @@ void main() {
             (style) => group('for headline style $style', () {
               testWidgets('formats as headline text', (tester) async {
                 await tester.pumpWidget(shell(
-                    theme: ThemeData(textTheme: TextTheme(headline4: style)),
-                    child: TitleText(text)));
+                  theme: NeumorphicThemeData(
+                    textTheme: TextTheme(headline4: style),
+                  ),
+                  child: TitleText(text),
+                ));
                 expect(
                   find.descendant(
                     of: find.byType(TitleText),

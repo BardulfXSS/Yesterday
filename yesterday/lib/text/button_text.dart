@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class ButtonText extends StatelessWidget {
   final String text;
@@ -6,6 +6,9 @@ class ButtonText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text);
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.button,
+    );
   }
 }

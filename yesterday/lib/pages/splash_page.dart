@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart' hide Page;
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yesterday/blocs/blocs.dart';
-import 'package:yesterday/pages/pages.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart' hide Page;
 import 'package:yesterday/text/text.dart';
 
-class SplashPage<T> extends StatelessWidget {
+class SplashPage extends StatelessWidget {
   const SplashPage({Key key}) : super(key: key);
 
   @override
@@ -14,40 +12,47 @@ class SplashPage<T> extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return Page<T>(
-      child: Scaffold(
-        body: Column(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Neumorphic(
+                    child: SizedBox(
                       width: 200,
                       height: 200,
                       child: Placeholder(),
                     ),
-                    TitleText("Yesterday"),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: TitleText("Yesterday"),
+                  ),
+                ],
               ),
             ),
-            Expanded(
-              child: Align(
-                alignment: Alignment(0, -1 / 2),
-                child: RaisedButton(
-                  onPressed: () =>
-                      BlocProvider.of<AuthenticationBloc<T>>(context)
-                          .add(LoginButtonPressed()),
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment(0, -1 / 2),
+              child: Center(
+                child: NeumorphicButton(
+                  style: NeumorphicStyle(
+                    color: Colors.white60,
+                    shape: NeumorphicShape.concave,
+                  ),
+                  onPressed: () => Navigator.pushNamed(context, 'login'),
                   child: ButtonText('Log In'),
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }
