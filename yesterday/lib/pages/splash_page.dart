@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart' hide Page;
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart' hide Page;
 import 'package:yesterday/text/text.dart';
@@ -40,15 +39,24 @@ class SplashPage extends StatelessWidget {
           Expanded(
             child: Align(
               alignment: Alignment(0, -1 / 2),
-              child: Center(
-                child: NeumorphicButton(
-                  style: NeumorphicStyle(
-                    color: Colors.white60,
-                    shape: NeumorphicShape.concave,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: NeumorphicButton(
+                      onPressed: () => Navigator.pushNamed(context, 'login'),
+                      child: ButtonText('Sign Up'),
+                    ),
                   ),
-                  onPressed: () => Navigator.pushNamed(context, 'login'),
-                  child: ButtonText('Log In'),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: NeumorphicButton(
+                      onPressed: () => Navigator.pushNamed(context, 'login'),
+                      child: ButtonText('Log In'),
+                    ),
+                  ),
+                ],
               ),
             ),
           )

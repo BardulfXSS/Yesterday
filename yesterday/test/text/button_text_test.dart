@@ -8,7 +8,7 @@ void main() {
   ['foo', 'bar', 'baz', 'quux'].forEach(
     (text) => group('given $text', () {
       testWidgets('displays given text', (tester) async {
-        await tester.pumpWidget(shell(child: ButtonText(text)));
+        await tester.pumpWidget(shell<String>(child: ButtonText(text)));
         expect(find.text(text), findsOneWidget);
       });
       [
@@ -18,7 +18,7 @@ void main() {
       ].map((c) => TextStyle(color: c)).forEach(
             (style) => group('for button style $style', () {
               testWidgets('formats as button text', (tester) async {
-                await tester.pumpWidget(shell(
+                await tester.pumpWidget(shell<String>(
                   theme: NeumorphicThemeData(
                     textTheme: TextTheme(button: style),
                   ),

@@ -1,11 +1,17 @@
-import 'package:flutter/material.dart' hide Page;
 import 'package:flutter/services.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart' hide Page;
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:yesterday/authentication_interceptor.dart';
+import 'package:yesterday/blocs/blocs.dart';
 import 'package:yesterday/pages/pages.dart';
+import 'package:yesterday/services/authentication_service.dart';
 
 void main() {
-  runApp(MyApp<String>());
+  runApp(RepositoryProvider<AuthenticationService<String>>(
+    create: (_) => PlaceholderAuthenticationService((e, p) async => e),
+    child: YesterdayApp<String>(),
+  ));
 }
 
 class AppTheme {
@@ -36,6 +42,9 @@ class AppTheme {
           button: TextStyle(
             fontWeight: FontWeight.bold,
           ),
+          subtitle2: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         )),
         baseColor: baseColor,
         accentColor: accentColor,
@@ -43,7 +52,7 @@ class AppTheme {
       );
 }
 
-class MyApp<T> extends StatelessWidget {
+class YesterdayApp<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -52,19 +61,34 @@ class MyApp<T> extends StatelessWidget {
       DeviceOrientation.portraitDown,
       DeviceOrientation.landscapeRight,
     ]);
-    return NeumorphicApp(
-      title: 'Yesterday',
-      theme: AppTheme.theme,
-      routes: {
-        '/': (ctx) => SplashPage(),
-        'login': (ctx) => Scaffold(body: Placeholder()),
-        'main': (ctx) => Scaffold(body: Placeholder()),
-        'view-playlist': (ctx) => Scaffold(body: Placeholder()),
-        'select-playlist-songs': (ctx) => Scaffold(body: Placeholder()),
-        'edit-playlist': (ctx) => Scaffold(body: Placeholder()),
-        'add-song': (ctx) => Scaffold(body: Placeholder()),
-        'add-metadata': (ctx) => Scaffold(body: Placeholder()),
-      },
+    return BlocProvider<AuthenticationBloc<T>>(
+      create: (c) => AuthenticationBloc(),
+      child: NeumorphicApp(
+        title: 'Yesterday',
+        theme: AppTheme.theme,
+        routes: {
+          '/': (ctx) => AuthenticationInterceptor<T>(child: SplashPage()),
+          'login': (ctx) => AuthenticationInterceptor<T>(child: LoginPage<T>()),
+          'main': (ctx) => AuthenticationInterceptor<T>(
+                child: Scaffold(body: Placeholder()),
+              ),
+          'view-playlist': (ctx) => AuthenticationInterceptor<T>(
+                child: Scaffold(body: Placeholder()),
+              ),
+          'select-playlist-songs': (ctx) => AuthenticationInterceptor<T>(
+                child: Scaffold(body: Placeholder()),
+              ),
+          'edit-playlist': (ctx) => AuthenticationInterceptor<T>(
+                child: Scaffold(body: Placeholder()),
+              ),
+          'add-song': (ctx) => AuthenticationInterceptor<T>(
+                child: Scaffold(body: Placeholder()),
+              ),
+          'add-metadata': (ctx) => AuthenticationInterceptor<T>(
+                child: Scaffold(body: Placeholder()),
+              ),
+        },
+      ),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart' hide Page;
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yesterday/pages/pages.dart' show SplashPage;
@@ -22,14 +21,16 @@ void main() {
   });
   group('when log in button pressed', () {
     testWidgets('changes to log in page', (tester) async {
+      final key = GlobalKey();
       await tester.pumpWidget(shell<String>(routes: {
         '/': (ctx) => SplashPage(),
-        'login': (ctx) => Scaffold(body: Placeholder()),
+        'login': (ctx) => Scaffold(body: Placeholder(key: key)),
       }));
       await tester.tap(find.text('Log In'));
       await tester.pumpAndSettle();
 
       expect(find.byType(SplashPage), findsNothing);
+      expect(find.byKey(key), findsOneWidget);
     });
     group('when back button pressed', () {
       testWidgets('goes back to splash screen', (t) async {

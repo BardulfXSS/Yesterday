@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yesterday/text/text.dart' show TitleText;
@@ -9,7 +8,7 @@ void main() {
   ['foo', 'bar', 'baz', 'quux'].forEach(
     (text) => group('given $text', () {
       testWidgets('displays given text', (tester) async {
-        await tester.pumpWidget(shell(child: TitleText(text)));
+        await tester.pumpWidget(shell<String>(child: TitleText(text)));
         expect(find.widgetWithText(TitleText, text), findsOneWidget);
       });
 
@@ -18,7 +17,7 @@ void main() {
           .forEach(
             (style) => group('for headline style $style', () {
               testWidgets('formats as headline text', (tester) async {
-                await tester.pumpWidget(shell(
+                await tester.pumpWidget(shell<String>(
                   theme: NeumorphicThemeData(
                     textTheme: TextTheme(headline4: style),
                   ),
