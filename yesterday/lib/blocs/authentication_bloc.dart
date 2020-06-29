@@ -15,12 +15,19 @@ class AuthenticationBloc<T>
       AuthenticationEvent<T> event) async* {
     if (event is UserLoggedIn<T>) {
       yield* mapUserLoggedInToState(event);
+    } else if (event is UserLoggedOut<T>) {
+      yield* mapUserLoggedOutToState(event);
     }
   }
 
   Stream<AuthenticationState<T>> mapUserLoggedInToState(
       UserLoggedIn<T> event) async* {
     yield AuthenticationAuthenticated((b) => b..user = event.user);
+  }
+
+  Stream<AuthenticationState<T>> mapUserLoggedOutToState(
+      UserLoggedOut<T> event) async* {
+    yield AuthenticationUnauthenticated();
   }
 }
 
@@ -45,6 +52,25 @@ abstract class UserLoggedIn<T>
   }
 
   static Serializer<UserLoggedIn> get serializer => _$userLoggedInSerializer;
+}
+
+abstract class UserLoggedOut<T>
+    implements
+        Built<UserLoggedOut<T>, UserLoggedOutBuilder<T>>,
+        AuthenticationEvent<T> {
+  UserLoggedOut._();
+  factory UserLoggedOut([void Function(UserLoggedOutBuilder<T>) updates]) =
+      _$UserLoggedOut<T>;
+
+  Map<String, dynamic> toJson() {
+    return serializers.serializeWith(UserLoggedOut.serializer, this);
+  }
+
+  static UserLoggedOut fromJson(Map<String, dynamic> json) {
+    return serializers.deserializeWith(UserLoggedOut.serializer, json);
+  }
+
+  static Serializer<UserLoggedOut> get serializer => _$userLoggedOutSerializer;
 }
 
 abstract class AuthenticationState<T> {}

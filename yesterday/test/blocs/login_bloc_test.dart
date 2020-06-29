@@ -7,10 +7,6 @@ import 'package:yesterday/services/services.dart';
 
 import '../test.dart';
 
-class MockAuthenticationBloc<T>
-    extends MockBloc<AuthenticationBloc<T>, AuthenticationState<T>>
-    implements AuthenticationBloc<T> {}
-
 void main() {
   blocTest(
     'emits LoginInitial',

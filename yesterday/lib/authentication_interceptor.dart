@@ -1,12 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:yesterday/blocs/blocs.dart';
 
-// TODO: Test this widget
 class AuthenticationInterceptor<T> extends StatelessWidget {
   final Widget child;
 
-  const AuthenticationInterceptor({Key key, this.child}) : super(key: key);
+  const AuthenticationInterceptor({Key key, @required this.child})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class AuthenticationInterceptor<T> extends StatelessWidget {
         }
       },
       builder: (_, s) => s is AuthenticationAuthenticated<T>
-          ? RepositoryProvider<T>.value(value: s.user, child: child)
+          ? Provider<T>.value(value: s.user, child: child)
           : child,
     );
   }

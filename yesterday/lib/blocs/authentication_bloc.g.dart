@@ -8,6 +8,8 @@ part of 'authentication_bloc.dart';
 
 Serializer<UserLoggedIn<Object>> _$userLoggedInSerializer =
     new _$UserLoggedInSerializer();
+Serializer<UserLoggedOut<Object>> _$userLoggedOutSerializer =
+    new _$UserLoggedOutSerializer();
 Serializer<AuthenticationInitial<Object>> _$authenticationInitialSerializer =
     new _$AuthenticationInitialSerializer();
 Serializer<AuthenticationLoading<Object>> _$authenticationLoadingSerializer =
@@ -74,6 +76,28 @@ class _$UserLoggedInSerializer
     }
 
     return result.build();
+  }
+}
+
+class _$UserLoggedOutSerializer
+    implements StructuredSerializer<UserLoggedOut<Object>> {
+  @override
+  final Iterable<Type> types = const [UserLoggedOut, _$UserLoggedOut];
+  @override
+  final String wireName = 'UserLoggedOut';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, UserLoggedOut<Object> object,
+      {FullType specifiedType = FullType.unspecified}) {
+    return <Object>[];
+  }
+
+  @override
+  UserLoggedOut<Object> deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    return new UserLoggedOutBuilder().build();
   }
 }
 
@@ -334,6 +358,68 @@ class UserLoggedInBuilder<T>
   @override
   _$UserLoggedIn<T> build() {
     final _$result = _$v ?? new _$UserLoggedIn<T>._(user: user);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$UserLoggedOut<T> extends UserLoggedOut<T> {
+  factory _$UserLoggedOut([void Function(UserLoggedOutBuilder<T>) updates]) =>
+      (new UserLoggedOutBuilder<T>()..update(updates)).build();
+
+  _$UserLoggedOut._() : super._() {
+    if (T == dynamic) {
+      throw new BuiltValueMissingGenericsError('UserLoggedOut', 'T');
+    }
+  }
+
+  @override
+  UserLoggedOut<T> rebuild(void Function(UserLoggedOutBuilder<T>) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  UserLoggedOutBuilder<T> toBuilder() =>
+      new UserLoggedOutBuilder<T>()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is UserLoggedOut;
+  }
+
+  @override
+  int get hashCode {
+    return 853500466;
+  }
+
+  @override
+  String toString() {
+    return newBuiltValueToStringHelper('UserLoggedOut').toString();
+  }
+}
+
+class UserLoggedOutBuilder<T>
+    implements Builder<UserLoggedOut<T>, UserLoggedOutBuilder<T>> {
+  _$UserLoggedOut<T> _$v;
+
+  UserLoggedOutBuilder();
+
+  @override
+  void replace(UserLoggedOut<T> other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$UserLoggedOut<T>;
+  }
+
+  @override
+  void update(void Function(UserLoggedOutBuilder<T>) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$UserLoggedOut<T> build() {
+    final _$result = _$v ?? new _$UserLoggedOut<T>._();
     replace(_$result);
     return _$result;
   }

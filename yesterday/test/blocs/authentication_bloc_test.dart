@@ -17,4 +17,12 @@ void main() {
       expect: [AuthenticationAuthenticated<String>((b) => b.user = 'foo')],
     );
   });
+  group('on user logged out', () {
+    blocTest(
+      'emits AuthenticationUnauthenticated',
+      build: () async => AuthenticationBloc<String>(),
+      act: (b) => b.add(UserLoggedOut<String>()),
+      expect: [AuthenticationUnauthenticated<String>()],
+    );
+  });
 }
