@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
-import 'package:yesterday/serializers.dart';
 
 part 'authentication_bloc.g.dart';
 
@@ -42,16 +40,6 @@ abstract class UserLoggedIn<T>
   UserLoggedIn._();
   factory UserLoggedIn([void Function(UserLoggedInBuilder<T>) updates]) =
       _$UserLoggedIn<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(UserLoggedIn.serializer, this);
-  }
-
-  static UserLoggedIn fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(UserLoggedIn.serializer, json);
-  }
-
-  static Serializer<UserLoggedIn> get serializer => _$userLoggedInSerializer;
 }
 
 abstract class UserLoggedOut<T>
@@ -61,16 +49,6 @@ abstract class UserLoggedOut<T>
   UserLoggedOut._();
   factory UserLoggedOut([void Function(UserLoggedOutBuilder<T>) updates]) =
       _$UserLoggedOut<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(UserLoggedOut.serializer, this);
-  }
-
-  static UserLoggedOut fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(UserLoggedOut.serializer, json);
-  }
-
-  static Serializer<UserLoggedOut> get serializer => _$userLoggedOutSerializer;
 }
 
 abstract class AuthenticationState<T> {}
@@ -83,17 +61,6 @@ abstract class AuthenticationInitial<T>
   factory AuthenticationInitial(
           [void Function(AuthenticationInitialBuilder<T>) updates]) =
       _$AuthenticationInitial<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(AuthenticationInitial.serializer, this);
-  }
-
-  static AuthenticationInitial fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(AuthenticationInitial.serializer, json);
-  }
-
-  static Serializer<AuthenticationInitial> get serializer =>
-      _$authenticationInitialSerializer;
 }
 
 abstract class AuthenticationLoading<T>
@@ -104,17 +71,6 @@ abstract class AuthenticationLoading<T>
   factory AuthenticationLoading(
           [void Function(AuthenticationLoadingBuilder<T>) updates]) =
       _$AuthenticationLoading<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(AuthenticationLoading.serializer, this);
-  }
-
-  static AuthenticationLoading fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(AuthenticationLoading.serializer, json);
-  }
-
-  static Serializer<AuthenticationLoading> get serializer =>
-      _$authenticationLoadingSerializer;
 }
 
 abstract class AuthenticationUnauthenticated<T>
@@ -126,19 +82,6 @@ abstract class AuthenticationUnauthenticated<T>
   factory AuthenticationUnauthenticated(
           [void Function(AuthenticationUnauthenticatedBuilder<T>) updates]) =
       _$AuthenticationUnauthenticated<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(
-        AuthenticationUnauthenticated.serializer, this);
-  }
-
-  static AuthenticationUnauthenticated fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(
-        AuthenticationUnauthenticated.serializer, json);
-  }
-
-  static Serializer<AuthenticationUnauthenticated> get serializer =>
-      _$authenticationUnauthenticatedSerializer;
 }
 
 abstract class AuthenticationAuthenticated<T>
@@ -152,19 +95,6 @@ abstract class AuthenticationAuthenticated<T>
   factory AuthenticationAuthenticated(
           [void Function(AuthenticationAuthenticatedBuilder<T>) updates]) =
       _$AuthenticationAuthenticated<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(
-        AuthenticationAuthenticated.serializer, this);
-  }
-
-  static AuthenticationAuthenticated fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(
-        AuthenticationAuthenticated.serializer, json);
-  }
-
-  static Serializer<AuthenticationAuthenticated> get serializer =>
-      _$authenticationAuthenticatedSerializer;
 }
 
 abstract class AuthenticationFailure<T>
@@ -177,15 +107,4 @@ abstract class AuthenticationFailure<T>
   factory AuthenticationFailure(
           [void Function(AuthenticationFailureBuilder<T>) updates]) =
       _$AuthenticationFailure<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(AuthenticationFailure.serializer, this);
-  }
-
-  static AuthenticationFailure fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(AuthenticationFailure.serializer, json);
-  }
-
-  static Serializer<AuthenticationFailure> get serializer =>
-      _$authenticationFailureSerializer;
 }

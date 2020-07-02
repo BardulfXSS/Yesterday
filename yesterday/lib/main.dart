@@ -67,8 +67,11 @@ class YesterdayApp<T> extends StatelessWidget {
         title: 'Yesterday',
         theme: AppTheme.theme,
         routes: {
-          '/': (ctx) => AuthenticationInterceptor<T>(child: SplashPage()),
-          'login': (ctx) => AuthenticationInterceptor<T>(child: LoginPage<T>()),
+          '/': (ctx) => WillPopScope(
+                onWillPop: () async => Navigator.canPop(ctx),
+                child: AuthenticationInterceptor<T>(child: SplashPage()),
+              ),
+          'login': (_) => AuthenticationInterceptor<T>(child: LoginPage<T>()),
           'main': (ctx) => AuthenticationInterceptor<T>(
                 child: Scaffold(body: Placeholder()),
               ),

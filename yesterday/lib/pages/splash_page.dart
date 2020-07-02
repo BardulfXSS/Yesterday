@@ -46,14 +46,14 @@ class SplashPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8),
                     child: NeumorphicButton(
                       onPressed: () => Navigator.pushNamed(context, 'login'),
-                      child: ButtonText('Sign Up'),
+                      child: LabelText('Sign Up'),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: NeumorphicButton(
                       onPressed: () => Navigator.pushNamed(context, 'login'),
-                      child: ButtonText('Log In'),
+                      child: LabelText('Log In'),
                     ),
                   ),
                 ],

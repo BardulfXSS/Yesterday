@@ -22,7 +22,7 @@ class LoginPage<T> extends StatelessWidget {
 
   void submitLoginForm(BuildContext context, LoginEvent event) {
     passwordNode.unfocus();
-    BlocProvider.of<LoginBloc<T>>(context).add(event);
+    context.bloc<LoginBloc<T>>().add(event);
   }
 
   void Function([String]) submit(BuildContext context) => ([String password]) {
@@ -38,7 +38,8 @@ class LoginPage<T> extends StatelessWidget {
     ]);
     return BlocProvider(
       create: (c) => LoginBloc<T>(
-          RepositoryProvider.of<AuthenticationService<T>>(context)),
+          context.repository<AuthenticationService<T>>(),
+          context.bloc<AuthenticationBloc<T>>()),
       child: BlocBuilder<LoginBloc<T>, LoginState<T>>(
         builder: (c, s) => Scaffold(
           body: Column(

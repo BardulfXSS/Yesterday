@@ -7,6 +7,8 @@ class YesterdayTextField extends StatelessWidget {
   final String labelText;
   final bool obscureText;
   final void Function(String) onSubmitted;
+  final Widget suffixIcon;
+  final TextAlignVertical textAlignVertical;
   final TextInputAction textInputAction;
 
   YesterdayTextField({
@@ -17,6 +19,8 @@ class YesterdayTextField extends StatelessWidget {
     this.labelText,
     this.obscureText = false,
     this.onSubmitted,
+    this.suffixIcon,
+    this.textAlignVertical,
     this.textInputAction = TextInputAction.done,
   })  : focusNode = focusNode ?? FocusNode(),
         super(key: key);
@@ -55,9 +59,11 @@ class YesterdayTextField extends StatelessWidget {
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   border: InputBorder.none,
+                  suffixIcon: suffixIcon,
                 ),
                 enabled: enabled,
                 focusNode: focusNode,
+                textAlignVertical: textAlignVertical,
                 textInputAction: textInputAction,
                 obscureText: obscureText,
                 onSubmitted: onSubmitted,

@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
 import 'package:yesterday/blocs/blocs.dart';
-import 'package:yesterday/serializers.dart';
 import 'package:yesterday/services/authentication_service.dart';
 
 part 'login_bloc.g.dart';
@@ -63,17 +61,6 @@ abstract class LoginWithEmailPassword
   factory LoginWithEmailPassword(
           [void Function(LoginWithEmailPasswordBuilder) updates]) =
       _$LoginWithEmailPassword;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(LoginWithEmailPassword.serializer, this);
-  }
-
-  static LoginWithEmailPassword fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(LoginWithEmailPassword.serializer, json);
-  }
-
-  static Serializer<LoginWithEmailPassword> get serializer =>
-      _$loginWithEmailPasswordSerializer;
 }
 
 abstract class LoginState<T> {}
@@ -83,16 +70,6 @@ abstract class LoginInitial<T>
   LoginInitial._();
   factory LoginInitial([void Function(LoginInitialBuilder<T>) updates]) =
       _$LoginInitial<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(LoginInitial.serializer, this);
-  }
-
-  static LoginInitial fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(LoginInitial.serializer, json);
-  }
-
-  static Serializer<LoginInitial> get serializer => _$loginInitialSerializer;
 }
 
 abstract class LoginLoading<T>
@@ -100,16 +77,6 @@ abstract class LoginLoading<T>
   LoginLoading._();
   factory LoginLoading([void Function(LoginLoadingBuilder<T>) updates]) =
       _$LoginLoading<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(LoginLoading.serializer, this);
-  }
-
-  static LoginLoading fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(LoginLoading.serializer, json);
-  }
-
-  static Serializer<LoginLoading> get serializer => _$loginLoadingSerializer;
 }
 
 abstract class LoginSuccess<T>
@@ -119,16 +86,6 @@ abstract class LoginSuccess<T>
   LoginSuccess._();
   factory LoginSuccess([void Function(LoginSuccessBuilder<T>) updates]) =
       _$LoginSuccess<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(LoginSuccess.serializer, this);
-  }
-
-  static LoginSuccess fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(LoginSuccess.serializer, json);
-  }
-
-  static Serializer<LoginSuccess> get serializer => _$loginSuccessSerializer;
 }
 
 abstract class LoginFailure<T>
@@ -138,14 +95,4 @@ abstract class LoginFailure<T>
   LoginFailure._();
   factory LoginFailure([void Function(LoginFailureBuilder<T>) updates]) =
       _$LoginFailure<T>;
-
-  Map<String, dynamic> toJson() {
-    return serializers.serializeWith(LoginFailure.serializer, this);
-  }
-
-  static LoginFailure fromJson(Map<String, dynamic> json) {
-    return serializers.deserializeWith(LoginFailure.serializer, json);
-  }
-
-  static Serializer<LoginFailure> get serializer => _$loginFailureSerializer;
 }
