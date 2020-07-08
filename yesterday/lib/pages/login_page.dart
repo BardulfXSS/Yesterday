@@ -68,7 +68,7 @@ class LoginPage<T> extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             style: NeumorphicStyle(
               boxShape: NeumorphicBoxShape.circle(),
-              depth: NeumorphicTheme.of(context).current.depth,
+              depth: NeumorphicTheme.depth(context),
             ),
             child: Icon(Icons.done),
           ),

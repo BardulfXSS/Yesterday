@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,3 +37,38 @@ Widget shell<T>({
     );
 
 Finder findByType<T>(T unit) => find.byWidgetPredicate((w) => w is T);
+
+class TestSliverPersistentHeaderDelegate
+    implements SliverPersistentHeaderDelegate {
+  @override
+  final double maxExtent;
+  @override
+  final double minExtent;
+  final Widget Function(
+    BuildContext context,
+    double shrinkOffset,
+    bool minExtent,
+  ) builder;
+  @override
+  final FloatingHeaderSnapConfiguration snapConfiguration;
+
+  TestSliverPersistentHeaderDelegate({
+    @required this.maxExtent,
+    @required this.minExtent,
+    @required this.builder,
+    this.snapConfiguration,
+  });
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) =>
+      builder(context, shrinkOffset, overlapsContent);
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
+  @override
+  OverScrollHeaderStretchConfiguration get stretchConfiguration => null;
+}

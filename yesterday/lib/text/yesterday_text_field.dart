@@ -43,7 +43,7 @@ class YesterdayTextField extends StatelessWidget {
                   labelText,
                   style: TextStyle(
                     color: focusNode.hasFocus
-                        ? NeumorphicTheme.of(context).current.accentColor
+                        ? NeumorphicTheme.accentColor(context)
                         : null,
                   ),
                 ),
@@ -52,7 +52,7 @@ class YesterdayTextField extends StatelessWidget {
               style: NeumorphicStyle(
                 boxShape:
                     NeumorphicBoxShape.roundRect(BorderRadius.circular(100)),
-                depth: -NeumorphicTheme.of(context).current.depth,
+                depth: -NeumorphicTheme.depth(context),
               ),
               child: TextField(
                 controller: controller,

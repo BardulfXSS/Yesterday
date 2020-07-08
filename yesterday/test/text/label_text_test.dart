@@ -16,11 +16,11 @@ void main() {
         Colors.red,
         Colors.blue,
       ].map((c) => TextStyle(color: c)).forEach(
-            (style) => group('for button style $style', () {
+            (style) => group('for bodyText1 style $style', () {
               testWidgets('formats as button text', (tester) async {
                 await tester.pumpWidget(shell<String>(
                   theme: NeumorphicThemeData(
-                    textTheme: TextTheme(button: style),
+                    textTheme: TextTheme(bodyText1: style),
                   ),
                   child: LabelText(text),
                 ));

@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:yesterday/unbounded_list_view.dart';
+import 'package:yesterday/slivers/slivers.dart';
 
-import 'test.dart';
+import '../test.dart';
 
 void main() {
   testWidgets("builds widgets it needs", (t) async {

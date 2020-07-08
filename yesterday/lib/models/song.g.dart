@@ -17,12 +17,25 @@ class _$SongSerializer implements StructuredSerializer<Song> {
   @override
   Iterable<Object> serialize(Serializers serializers, Song object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.albumArtUrl != null) {
+    final result = <Object>[
+      'title',
+      serializers.serialize(object.title,
+          specifiedType: const FullType(String)),
+      'duration',
+      serializers.serialize(object.duration,
+          specifiedType: const FullType(Duration)),
+    ];
+    if (object.artist != null) {
       result
-        ..add('albumArtUrl')
-        ..add(serializers.serialize(object.albumArtUrl,
-            specifiedType: const FullType(String)));
+        ..add('artist')
+        ..add(serializers.serialize(object.artist,
+            specifiedType: const FullType(Artist)));
+    }
+    if (object.album != null) {
+      result
+        ..add('album')
+        ..add(serializers.serialize(object.album,
+            specifiedType: const FullType(Album)));
     }
     return result;
   }
@@ -38,9 +51,21 @@ class _$SongSerializer implements StructuredSerializer<Song> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'albumArtUrl':
-          result.albumArtUrl = serializers.deserialize(value,
+        case 'title':
+          result.title = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'artist':
+          result.artist.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Artist)) as Artist);
+          break;
+        case 'album':
+          result.album.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Album)) as Album);
+          break;
+        case 'duration':
+          result.duration = serializers.deserialize(value,
+              specifiedType: const FullType(Duration)) as Duration;
           break;
       }
     }
@@ -51,12 +76,25 @@ class _$SongSerializer implements StructuredSerializer<Song> {
 
 class _$Song extends Song {
   @override
-  final String albumArtUrl;
+  final String title;
+  @override
+  final Artist artist;
+  @override
+  final Album album;
+  @override
+  final Duration duration;
 
   factory _$Song([void Function(SongBuilder) updates]) =>
       (new SongBuilder()..update(updates)).build();
 
-  _$Song._({this.albumArtUrl}) : super._();
+  _$Song._({this.title, this.artist, this.album, this.duration}) : super._() {
+    if (title == null) {
+      throw new BuiltValueNullFieldError('Song', 'title');
+    }
+    if (duration == null) {
+      throw new BuiltValueNullFieldError('Song', 'duration');
+    }
+  }
 
   @override
   Song rebuild(void Function(SongBuilder) updates) =>
@@ -68,18 +106,27 @@ class _$Song extends Song {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Song && albumArtUrl == other.albumArtUrl;
+    return other is Song &&
+        title == other.title &&
+        artist == other.artist &&
+        album == other.album &&
+        duration == other.duration;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, albumArtUrl.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, title.hashCode), artist.hashCode), album.hashCode),
+        duration.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('Song')
-          ..add('albumArtUrl', albumArtUrl))
+          ..add('title', title)
+          ..add('artist', artist)
+          ..add('album', album)
+          ..add('duration', duration))
         .toString();
   }
 }
@@ -87,15 +134,30 @@ class _$Song extends Song {
 class SongBuilder implements Builder<Song, SongBuilder> {
   _$Song _$v;
 
-  String _albumArtUrl;
-  String get albumArtUrl => _$this._albumArtUrl;
-  set albumArtUrl(String albumArtUrl) => _$this._albumArtUrl = albumArtUrl;
+  String _title;
+  String get title => _$this._title;
+  set title(String title) => _$this._title = title;
+
+  ArtistBuilder _artist;
+  ArtistBuilder get artist => _$this._artist ??= new ArtistBuilder();
+  set artist(ArtistBuilder artist) => _$this._artist = artist;
+
+  AlbumBuilder _album;
+  AlbumBuilder get album => _$this._album ??= new AlbumBuilder();
+  set album(AlbumBuilder album) => _$this._album = album;
+
+  Duration _duration;
+  Duration get duration => _$this._duration;
+  set duration(Duration duration) => _$this._duration = duration;
 
   SongBuilder();
 
   SongBuilder get _$this {
     if (_$v != null) {
-      _albumArtUrl = _$v.albumArtUrl;
+      _title = _$v.title;
+      _artist = _$v.artist?.toBuilder();
+      _album = _$v.album?.toBuilder();
+      _duration = _$v.duration;
       _$v = null;
     }
     return this;
@@ -116,7 +178,27 @@ class SongBuilder implements Builder<Song, SongBuilder> {
 
   @override
   _$Song build() {
-    final _$result = _$v ?? new _$Song._(albumArtUrl: albumArtUrl);
+    _$Song _$result;
+    try {
+      _$result = _$v ??
+          new _$Song._(
+              title: title,
+              artist: _artist?.build(),
+              album: _album?.build(),
+              duration: duration);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'artist';
+        _artist?.build();
+        _$failedField = 'album';
+        _album?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Song', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

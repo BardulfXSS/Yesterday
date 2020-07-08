@@ -14,7 +14,12 @@ void main() {
         await t.pumpWidget(shell<String>(
           child: Playlist((b) => b
             ..name = 'foo'
-            ..songs.add(Song((b) => b.albumArtUrl = url))).thumbnail,
+            ..songs.add(Song((b) => b
+              ..title = 'foo'
+              ..album.update((b) => b
+                ..name = 'bar'
+                ..coverArtUrl = url)
+              ..duration = Duration()))).thumbnail,
         ));
         final NetworkImage img = t.widget<Image>(find.byType(Image)).image;
         final NetworkImage defaultImg = Playlist.defaultThumbnail.image;
@@ -46,7 +51,12 @@ void main() {
             await t.pumpWidget(shell<String>(
               child: Playlist((b) => b
                 ..name = 'foo'
-                ..songs.add(Song((b) => b.albumArtUrl = url))).thumbnail,
+                ..songs.add(Song((b) => b
+                  ..title = 'foo'
+                  ..album.update((b) => b
+                    ..name = 'bar'
+                    ..coverArtUrl = url)
+                  ..duration = Duration()))).thumbnail,
             ));
             await t.pumpAndSettle();
 
@@ -69,7 +79,12 @@ void main() {
               child: Playlist((b) => b
                 ..name = 'foo'
                 ..songs.addAll(
-                  urls.map((u) => Song((b) => b.albumArtUrl = u)),
+                  urls.map((u) => Song((b) => b
+                    ..title = 'foo'
+                    ..album.update((b) => b
+                      ..name = 'bar'
+                      ..coverArtUrl = u)
+                    ..duration = Duration())),
                 )).thumbnail,
             ));
             await t.pumpAndSettle();

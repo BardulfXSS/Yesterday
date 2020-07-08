@@ -7,8 +7,16 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(Album.serializer)
+      ..add(Artist.serializer)
       ..add(Playlist.serializer)
       ..add(Song.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Album)]),
+          () => new ListBuilder<Album>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Song)]),
+          () => new ListBuilder<Song>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Song)]),
           () => new ListBuilder<Song>()))

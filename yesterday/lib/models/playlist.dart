@@ -15,8 +15,8 @@ abstract class Playlist implements Built<Playlist, PlaylistBuilder> {
       Image.network('https://via.placeholder.com/150');
   Widget get thumbnail => FutureBuilder<List<Image>>(
         future: Stream.fromIterable(songs)
-            .where((s) => s.albumArtUrl != null)
-            .distinct((s, s2) => s.albumArtUrl == s2.albumArtUrl)
+            .where((s) => s.album?.coverArtUrl != null)
+            .distinct((s, s2) => s.album?.coverArtUrl == s2.album?.coverArtUrl)
             .take(4)
             .map((s) => s.thumbnail)
             .toList(),

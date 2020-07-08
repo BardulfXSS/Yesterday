@@ -8,6 +8,7 @@ part 'serializers.g.dart';
 @SerializersFor([
   Playlist,
   Song,
+  Artist,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();
