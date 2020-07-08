@@ -6,8 +6,13 @@ import 'package:yesterday/slivers/slivers.dart';
 
 class PlaylistGroupSliver extends StatefulWidget {
   final Map<String, List<Playlist>> playlistGroups;
+  final ScrollController controller;
 
-  PlaylistGroupSliver({Key key, this.playlistGroups}) : super(key: key);
+  PlaylistGroupSliver({
+    Key key,
+    @required this.playlistGroups,
+    this.controller,
+  }) : super(key: key);
 
   @override
   _PlaylistGroupSliverState createState() => _PlaylistGroupSliverState();
@@ -20,12 +25,15 @@ class _PlaylistGroupSliverState extends State<PlaylistGroupSliver>
     return ShrinkWrappedSliverPersistentHeader(
       floating: true,
       delegate: PlaylistGroupPersistentHeaderDelegate(
+        controller: widget.controller,
         playlistGroups: widget.playlistGroups,
-        snapConfiguration: FloatingHeaderSnapConfiguration(
-          vsync: this,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 200),
-        ),
+        snapConfiguration: widget.controller != null
+            ? FloatingHeaderSnapConfiguration(
+                vsync: this,
+                curve: Curves.easeOut,
+                duration: const Duration(milliseconds: 200),
+              )
+            : null,
       ),
     );
   }
@@ -34,49 +42,56 @@ class _PlaylistGroupSliverState extends State<PlaylistGroupSliver>
 class PlaylistGroupPersistentHeaderDelegate
     implements SliverPersistentHeaderDelegate {
   final Map<String, List<Playlist>> playlistGroups;
+  final ScrollController controller;
   @override
   final FloatingHeaderSnapConfiguration snapConfiguration;
 
   PlaylistGroupPersistentHeaderDelegate({
-    this.playlistGroups,
+    @required this.playlistGroups,
+    this.controller,
     this.snapConfiguration,
   })  : assert(playlistGroups.containsKey('artists')),
-        assert(playlistGroups.containsKey('playlists'));
+        assert(playlistGroups.containsKey('playlists')),
+        assert(snapConfiguration == null || controller != null);
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SnapListener(
-      child: Neumorphic(
-        style: NeumorphicStyle(
-          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
-          )),
-          depth: NeumorphicTheme.depth(context),
-        ),
-        child: SingleChildScrollView(
-          child: Container(
-            color: NeumorphicTheme.baseColor(context),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: PlaylistGroup(
-                    labelText: 'Artists',
-                    playlists: playlistGroups['artists'],
-                  ),
+    final result = Neumorphic(
+      style: NeumorphicStyle(
+        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.only(
+          bottomLeft: Radius.circular(10),
+          bottomRight: Radius.circular(10),
+        )),
+        depth: NeumorphicTheme.depth(context),
+      ),
+      child: SingleChildScrollView(
+        child: Container(
+          color: NeumorphicTheme.baseColor(context),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: PlaylistGroup(
+                  labelText: 'Artists',
+                  playlists: playlistGroups['artists'],
                 ),
-                PlaylistGroup(
-                  labelText: 'Playlists',
-                  playlists: playlistGroups['playlists'],
-                ),
-              ],
-            ),
+              ),
+              PlaylistGroup(
+                labelText: 'Playlists',
+                playlists: playlistGroups['playlists'],
+              ),
+            ],
           ),
         ),
       ),
     );
+    return snapConfiguration == null
+        ? result
+        : SnapListener(
+            controller: controller,
+            child: result,
+          );
   }
 
   @override
@@ -87,54 +102,4 @@ class PlaylistGroupPersistentHeaderDelegate
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
   @override
   OverScrollHeaderStretchConfiguration get stretchConfiguration => null;
-}
-
-class SnapListener extends StatefulWidget {
-  final Widget child;
-
-  SnapListener({Key key, this.child}) : super(key: key);
-
-  @override
-  _SnapListenerState createState() => _SnapListenerState();
-}
-
-class _SnapListenerState extends State<SnapListener> {
-  ScrollPosition _position;
-
-  @override
-  Widget build(BuildContext context) => widget.child;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_position != null)
-      _position.isScrollingNotifier.removeListener(_isScrollingListener);
-    _position = Scrollable.of(context)?.position;
-    if (_position != null)
-      _position.isScrollingNotifier.addListener(_isScrollingListener);
-  }
-
-  @override
-  void dispose() {
-    if (_position != null)
-      _position.isScrollingNotifier.removeListener(_isScrollingListener);
-    super.dispose();
-  }
-
-  RenderSliverFloatingPersistentHeader _headerRenderer() {
-    return context
-        .findAncestorRenderObjectOfType<RenderSliverFloatingPersistentHeader>();
-  }
-
-  void _isScrollingListener() {
-    if (_position == null) return;
-
-    // When a scroll stops, then maybe snap into view.
-    // Similarly, when a scroll starts, then maybe stop the snap animation.
-    final RenderSliverFloatingPersistentHeader header = _headerRenderer();
-    if (_position.isScrollingNotifier.value)
-      header?.maybeStopSnapAnimation(_position.userScrollDirection);
-    else
-      header?.maybeStartSnapAnimation(_position.userScrollDirection);
-  }
 }

@@ -1,4 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:math' as math;
+
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:yesterday/models/models.dart';
@@ -24,6 +26,127 @@ void main() {
       ));
 
       expect(find.byType(ShrinkWrappedSliverPersistentHeader), findsOneWidget);
+    });
+  });
+  testWidgets('snaps shut when user scrolls up from top', (t) async {
+    mockNetworkImagesFor(() async {
+      final controller = ScrollController();
+      await t.pumpWidget(shell<String>(
+        child: CustomScrollView(
+          controller: controller,
+          slivers: [
+            PlaylistGroupSliver(
+              controller: controller,
+              playlistGroups: {'artists': [], 'playlists': []},
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((_, i) => Text('$i')),
+            ),
+          ],
+        ),
+      ));
+
+      expect(find.byType(PlaylistGroupSliver), findsOneWidget);
+
+      await t.dragFrom(Offset(400, 300), Offset.fromDirection(-math.pi / 2));
+      await t.pumpAndSettle();
+
+      expect(find.byType(PlaylistGroupSliver), findsNothing);
+    });
+  });
+  testWidgets('snaps open when user scrolls down from top', (t) async {
+    mockNetworkImagesFor(() async {
+      final controller = ScrollController();
+      await t.pumpWidget(shell<String>(
+        child: CustomScrollView(
+          controller: controller,
+          slivers: [
+            PlaylistGroupSliver(
+              controller: controller,
+              playlistGroups: {'artists': [], 'playlists': []},
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((_, i) => Text('$i')),
+            ),
+          ],
+        ),
+      ));
+
+      await t.dragFrom(Offset(400, 300), Offset.fromDirection(-math.pi / 2));
+      await t.pumpAndSettle();
+
+      expect(find.text('1'), findsOneWidget);
+      expect(find.byType(PlaylistGroupSliver), findsNothing);
+
+      await t.dragFrom(Offset(400, 300), Offset.fromDirection(math.pi / 2));
+      await t.pumpAndSettle();
+
+      expect(find.text('1'), findsOneWidget);
+      expect(find.byType(PlaylistGroupSliver), findsOneWidget);
+    });
+  });
+  testWidgets('snaps open when user scrolls down from middle', (t) async {
+    mockNetworkImagesFor(() async {
+      final controller = ScrollController();
+      await t.pumpWidget(shell<String>(
+        child: CustomScrollView(
+          controller: controller,
+          slivers: [
+            PlaylistGroupSliver(
+              controller: controller,
+              playlistGroups: {'artists': [], 'playlists': []},
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((_, i) => Text('$i')),
+            ),
+          ],
+        ),
+      ));
+
+      await t.dragFrom(
+          Offset(400, 300), Offset.fromDirection(-math.pi / 2, 1000));
+      await t.pumpAndSettle();
+
+      expect(find.text('1'), findsNothing);
+
+      await t.dragFrom(Offset(400, 300), Offset.fromDirection(math.pi / 2));
+      await t.pumpAndSettle();
+
+      expect(find.text('1'), findsNothing);
+      expect(find.byType(PlaylistGroupSliver), findsOneWidget);
+    });
+  });
+  testWidgets('snaps shut when user scrolls up from middle', (t) async {
+    mockNetworkImagesFor(() async {
+      final controller = ScrollController();
+      await t.pumpWidget(shell<String>(
+        child: CustomScrollView(
+          controller: controller,
+          slivers: [
+            PlaylistGroupSliver(
+              controller: controller,
+              playlistGroups: {'artists': [], 'playlists': []},
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((_, i) => Text('$i')),
+            ),
+          ],
+        ),
+      ));
+
+      await t.dragFrom(
+          Offset(400, 300), Offset.fromDirection(-math.pi / 2, 1000));
+      await t.pumpAndSettle();
+
+      expect(find.text('1'), findsNothing);
+
+      await t.dragFrom(Offset(400, 300), Offset.fromDirection(math.pi / 2));
+      await t.pumpAndSettle();
+
+      await t.dragFrom(Offset(400, 300), Offset.fromDirection(-math.pi / 2));
+      await t.pumpAndSettle();
+
+      expect(find.byType(PlaylistGroupSliver), findsNothing);
     });
   });
   testWidgets('displays artists playlist group', (t) async {
