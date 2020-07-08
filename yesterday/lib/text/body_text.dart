@@ -12,9 +12,12 @@ class BodyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return YesterdayText(text,
-        style: (NeumorphicTheme.currentTheme(context).textTheme.bodyText2 ??
-                TextStyle())
-            .merge(style));
+    return YesterdayText(
+      text,
+      dark: dark,
+      style: (NeumorphicTheme.currentTheme(context).textTheme.bodyText2 ??
+              TextStyle())
+          .merge(style),
+    );
   }
 }

@@ -37,6 +37,19 @@ void main() {
               });
             }),
           );
+      testWidgets('displays white text if dark', (tester) async {
+        await tester.pumpWidget(shell<String>(
+          child: BodyText(text, dark: true),
+        ));
+        expect(
+          find.descendant(
+            of: find.byType(BodyText),
+            matching: find.byWidgetPredicate(
+                (w) => w is Text && w.style.color == Colors.white),
+          ),
+          findsOneWidget,
+        );
+      });
     }),
   );
 }

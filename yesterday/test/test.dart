@@ -72,3 +72,33 @@ class TestSliverPersistentHeaderDelegate
   @override
   OverScrollHeaderStretchConfiguration get stretchConfiguration => null;
 }
+
+class SnapConfigurationBuilder extends StatefulWidget {
+  final Widget Function(BuildContext context,
+      FloatingHeaderSnapConfiguration snapConfiguration) builder;
+  final Curve curve;
+  final Duration duration;
+
+  SnapConfigurationBuilder({
+    Key key,
+    @required this.builder,
+    this.curve,
+    this.duration,
+  }) : super(key: key);
+
+  @override
+  _SnapConfigurationBuilderState createState() =>
+      _SnapConfigurationBuilderState();
+}
+
+class _SnapConfigurationBuilderState extends State<SnapConfigurationBuilder>
+    with SingleTickerProviderStateMixin {
+  @override
+  Widget build(BuildContext context) => widget.builder(
+      context,
+      FloatingHeaderSnapConfiguration(
+        vsync: this,
+        curve: widget.curve,
+        duration: widget.duration,
+      ));
+}
