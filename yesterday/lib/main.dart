@@ -42,12 +42,17 @@ class AppTheme {
           button: TextStyle(
             fontWeight: FontWeight.bold,
           ),
+          bodyText1: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
           subtitle2: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         )),
         baseColor: baseColor,
         accentColor: accentColor,
+        variantColor: primarySwatch.shade500,
         depth: 10,
       );
 }
@@ -72,8 +77,11 @@ class YesterdayApp<T> extends StatelessWidget {
                 child: AuthenticationInterceptor<T>(child: SplashPage()),
               ),
           'login': (_) => AuthenticationInterceptor<T>(child: LoginPage<T>()),
-          'main': (ctx) => AuthenticationInterceptor<T>(
-                child: Scaffold(body: Placeholder()),
+          'main': (ctx) => WillPopScope(
+                onWillPop: () async => Navigator.canPop(ctx),
+                child: AuthenticationInterceptor<T>(
+                  child: MainPage(),
+                ),
               ),
           'view-playlist': (ctx) => AuthenticationInterceptor<T>(
                 child: Scaffold(body: Placeholder()),
