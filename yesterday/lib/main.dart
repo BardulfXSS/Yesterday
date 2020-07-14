@@ -60,11 +60,11 @@ class AppTheme {
 class YesterdayApp<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Causes following warning in tests:
+    // Error loading AssetManifest.json, e: Unable to load asset: AssetManifest.json
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
-      DeviceOrientation.landscapeLeft,
       DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeRight,
     ]);
     return BlocProvider<AuthenticationBloc<T>>(
       create: (c) => AuthenticationBloc(),
@@ -80,7 +80,7 @@ class YesterdayApp<T> extends StatelessWidget {
           'main': (ctx) => WillPopScope(
                 onWillPop: () async => Navigator.canPop(ctx),
                 child: AuthenticationInterceptor<T>(
-                  child: MainPage(),
+                  child: MainPage<T>(),
                 ),
               ),
           'view-playlist': (ctx) => AuthenticationInterceptor<T>(
