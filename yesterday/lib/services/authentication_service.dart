@@ -31,6 +31,7 @@ abstract class AuthenticationError
       _$authenticationErrorSerializer;
 }
 
+// TODO: Write a real AuthenticationService and test it
 /// This class is untested as it is only here to stub out a real implementation
 /// later on
 class PlaceholderAuthenticationService<T> implements AuthenticationService<T> {
