@@ -1,4 +1,3 @@
-export 'album.dart';
-export 'artist.dart';
-export 'playlist.dart';
-export 'song.dart';
+export 'music.dart';
+export 'music_data.dart';
+export 'tile.dart';
