@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:yesterday/models/models.dart';
 import 'package:yesterday/text/text.dart';
 
-class PlaylistTile extends StatelessWidget {
-  final Playlist playlist;
+class ThumbnailTile extends StatelessWidget {
+  final TileContent content;
   final double width;
-  const PlaylistTile({Key key, this.playlist, this.width = 80})
+  const ThumbnailTile({Key key, @required this.content, this.width = 80})
       : super(key: key);
 
   @override
@@ -13,12 +13,11 @@ class PlaylistTile extends StatelessWidget {
     return SizedBox(
       width: width,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
-          playlist.thumbnail,
+          SizedBox(height: width, child: content.thumbnail),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: YesterdayText(playlist.name),
+            child: YesterdayText(content.name),
           ),
         ],
       ),

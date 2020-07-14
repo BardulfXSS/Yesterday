@@ -9,13 +9,14 @@ class AlbumThumbnail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.only(left: 15, right: 10),
       child: SizedBox(
         width: width,
         child: Neumorphic(
           style: NeumorphicStyle(
             depth: NeumorphicTheme.depth(context) / 2,
-            boxShape: NeumorphicBoxShape.circle(),
+            boxShape: NeumorphicBoxShape.roundRect(
+                BorderRadius.all(Radius.circular(10))),
           ),
           child: song.thumbnail,
         ),

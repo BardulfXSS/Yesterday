@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:yesterday/models/models.dart';
-import 'package:yesterday/song/song.dart';
+import 'package:yesterday/tile/song/song.dart';
 
 class SongTile extends StatelessWidget {
   final Song song;

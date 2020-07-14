@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:yesterday/models/models.dart';
-import 'package:yesterday/song/song.dart';
 import 'package:yesterday/text/text.dart';
+import 'package:yesterday/tile/song/song.dart';
 
 class SongDetailsRow extends StatelessWidget {
   final double height;
@@ -32,7 +32,8 @@ class SongDetailsRow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TitleArtistRow(song: song),
+                LabelText(song.title, dark: true),
+                BodyText(song.artist?.name ?? '', dark: true),
                 BodyText(song.album?.name ?? '', dark: true),
               ],
             ),

@@ -1,17 +1,15 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:yesterday/models/models.dart';
-import 'package:yesterday/playlist/playlist.dart';
 import 'package:yesterday/slivers/slivers.dart';
 import 'package:yesterday/text/text.dart';
+import 'package:yesterday/tile/tile.dart';
 
-class PlaylistGroup extends StatelessWidget {
+class ThumbnailGroup extends StatelessWidget {
   final String labelText;
-  final List<Playlist> playlists;
-  const PlaylistGroup({
-    Key key,
-    this.labelText,
-    @required this.playlists,
-  }) : super(key: key);
+  final BuiltList<TileContent> tileContents;
+  const ThumbnailGroup({Key key, this.labelText, @required this.tileContents})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +34,9 @@ class PlaylistGroup extends StatelessWidget {
               child: UnboundedListView.builder(
                 itemBuilder: (_, i) => Padding(
                   padding: EdgeInsets.only(left: 10),
-                  child: PlaylistTile(playlist: playlists[i]),
+                  child: ThumbnailTile(content: tileContents[i]),
                 ),
-                itemCount: playlists.length,
+                itemCount: tileContents.length,
                 scrollDirection: Axis.horizontal,
               ),
             ),
