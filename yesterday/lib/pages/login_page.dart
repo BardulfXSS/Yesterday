@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:yesterday/blocs/blocs.dart';
@@ -32,10 +31,6 @@ class LoginPage<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
     return BlocProvider(
       create: (c) => LoginBloc<T>(
           context.repository<AuthenticationService<T>>(),
