@@ -6,7 +6,7 @@ import 'package:yesterday/services/services.dart';
 import 'test.dart';
 
 void main() {
-  testWidgets('App-wide smoke test', (t) async {
+  testWidgets('YesterdayApp loads', (t) async {
     t.pumpWidget(RepositoryProvider<AuthenticationService<String>>(
       create: (_) => MockAuthenticationService(),
       child: YesterdayApp<String>(),
