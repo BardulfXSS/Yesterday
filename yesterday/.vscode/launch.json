@@ -5,13 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Flutter",
+      "name": "Yesterday App",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart"
     },
     {
-      "name": "Flutter: Run all Tests",
+      "name": "Yesterday Tests",
       "type": "dart",
       "request": "launch",
       "program": "./test/"
