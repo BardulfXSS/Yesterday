@@ -5,9 +5,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 // The only custom code is in here
-mixin _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin
+mixin _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin
     on RenderSliverPersistentHeader {
-  _ShrinkWrappedSliverPersistentHeaderElement _element;
+  _SliverShrinkWrappedPersistentHeaderElement _element;
   double _maxExtent = double.infinity;
 
   @override
@@ -38,8 +38,8 @@ mixin _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin
 
 // The rest of this file is just copy-pasted
 // This is necessary since all of the implementation classes are package-private
-class ShrinkWrappedSliverPersistentHeader extends SliverPersistentHeader {
-  const ShrinkWrappedSliverPersistentHeader({
+class SliverShrinkWrappedPersistentHeader extends SliverPersistentHeader {
+  const SliverShrinkWrappedPersistentHeader({
     Key key,
     @required delegate,
     pinned = false,
@@ -49,29 +49,29 @@ class ShrinkWrappedSliverPersistentHeader extends SliverPersistentHeader {
   @override
   Widget build(BuildContext context) {
     if (floating && pinned)
-      return _ShrinkWrappedSliverFloatingPinnedPersistentHeader(
+      return _SliverShrinkWrappedFloatingPinnedPersistentHeader(
           delegate: delegate);
     if (pinned)
-      return _ShrinkWrappedSliverPinnedPersistentHeader(delegate: delegate);
+      return _SliverShrinkWrappedPinnedPersistentHeader(delegate: delegate);
     if (floating)
-      return _ShrinkWrappedSliverFloatingPersistentHeader(delegate: delegate);
-    return _ShrinkWrappedSliverScrollingPersistentHeader(delegate: delegate);
+      return _SliverShrinkWrappedFloatingPersistentHeader(delegate: delegate);
+    return _SliverShrinkWrappedScrollingPersistentHeader(delegate: delegate);
   }
 }
 
-class _ShrinkWrappedSliverPersistentHeaderElement extends RenderObjectElement {
-  _ShrinkWrappedSliverPersistentHeaderElement(
-      _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget widget)
+class _SliverShrinkWrappedPersistentHeaderElement extends RenderObjectElement {
+  _SliverShrinkWrappedPersistentHeaderElement(
+      _SliverShrinkWrappedPersistentHeaderRenderObjectWidget widget)
       : super(widget);
 
   @override
-  _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget get widget =>
-      super.widget as _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget;
+  _SliverShrinkWrappedPersistentHeaderRenderObjectWidget get widget =>
+      super.widget as _SliverShrinkWrappedPersistentHeaderRenderObjectWidget;
 
   @override
-  _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin get renderObject =>
+  _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin get renderObject =>
       super.renderObject
-          as _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin;
+          as _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin;
 
   @override
   void mount(Element parent, dynamic newSlot) {
@@ -87,8 +87,8 @@ class _ShrinkWrappedSliverPersistentHeaderElement extends RenderObjectElement {
 
   @override
   void update(
-      _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget newWidget) {
-    final _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget oldWidget =
+      _SliverShrinkWrappedPersistentHeaderRenderObjectWidget newWidget) {
+    final _SliverShrinkWrappedPersistentHeaderRenderObjectWidget oldWidget =
         widget;
     super.update(newWidget);
     final SliverPersistentHeaderDelegate newDelegate = newWidget.delegate;
@@ -146,9 +146,9 @@ class _ShrinkWrappedSliverPersistentHeaderElement extends RenderObjectElement {
   }
 }
 
-abstract class _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget
+abstract class _SliverShrinkWrappedPersistentHeaderRenderObjectWidget
     extends RenderObjectWidget {
-  const _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget({
+  const _SliverShrinkWrappedPersistentHeaderRenderObjectWidget({
     Key key,
     @required this.delegate,
   })  : assert(delegate != null),
@@ -157,11 +157,11 @@ abstract class _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget
   final SliverPersistentHeaderDelegate delegate;
 
   @override
-  _ShrinkWrappedSliverPersistentHeaderElement createElement() =>
-      _ShrinkWrappedSliverPersistentHeaderElement(this);
+  _SliverShrinkWrappedPersistentHeaderElement createElement() =>
+      _SliverShrinkWrappedPersistentHeaderElement(this);
 
   @override
-  _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin createRenderObject(
+  _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin createRenderObject(
       BuildContext context);
 
   @override
@@ -174,9 +174,9 @@ abstract class _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget
   }
 }
 
-class _ShrinkWrappedSliverScrollingPersistentHeader
-    extends _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget {
-  const _ShrinkWrappedSliverScrollingPersistentHeader({
+class _SliverShrinkWrappedScrollingPersistentHeader
+    extends _SliverShrinkWrappedPersistentHeaderRenderObjectWidget {
+  const _SliverShrinkWrappedScrollingPersistentHeader({
     Key key,
     @required SliverPersistentHeaderDelegate delegate,
   }) : super(
@@ -185,16 +185,16 @@ class _ShrinkWrappedSliverScrollingPersistentHeader
         );
 
   @override
-  _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin createRenderObject(
+  _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin createRenderObject(
       BuildContext context) {
-    return _ShrinkWrappedRenderSliverScrollingPersistentHeaderForWidgets(
+    return _RenderSliverShrinkWrappedScrollingPersistentHeaderForWidgets(
         stretchConfiguration: delegate.stretchConfiguration);
   }
 }
 
-class _ShrinkWrappedSliverPinnedPersistentHeader
-    extends _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget {
-  const _ShrinkWrappedSliverPinnedPersistentHeader({
+class _SliverShrinkWrappedPinnedPersistentHeader
+    extends _SliverShrinkWrappedPersistentHeaderRenderObjectWidget {
+  const _SliverShrinkWrappedPinnedPersistentHeader({
     Key key,
     @required SliverPersistentHeaderDelegate delegate,
   }) : super(
@@ -203,16 +203,16 @@ class _ShrinkWrappedSliverPinnedPersistentHeader
         );
 
   @override
-  _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin createRenderObject(
+  _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin createRenderObject(
       BuildContext context) {
-    return _ShrinkWrappedRenderSliverPinnedPersistentHeaderForWidgets(
+    return _RenderSliverShrinkWrappedPinnedPersistentHeaderForWidgets(
         stretchConfiguration: delegate.stretchConfiguration);
   }
 }
 
-class _ShrinkWrappedSliverFloatingPinnedPersistentHeader
-    extends _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget {
-  const _ShrinkWrappedSliverFloatingPinnedPersistentHeader({
+class _SliverShrinkWrappedFloatingPinnedPersistentHeader
+    extends _SliverShrinkWrappedPersistentHeaderRenderObjectWidget {
+  const _SliverShrinkWrappedFloatingPinnedPersistentHeader({
     Key key,
     @required SliverPersistentHeaderDelegate delegate,
   }) : super(
@@ -221,9 +221,9 @@ class _ShrinkWrappedSliverFloatingPinnedPersistentHeader
         );
 
   @override
-  _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin createRenderObject(
+  _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin createRenderObject(
       BuildContext context) {
-    return _ShrinkWrappedRenderSliverFloatingPinnedPersistentHeaderForWidgets(
+    return _RenderSliverShrinkWrappedFloatingPinnedPersistentHeaderForWidgets(
       snapConfiguration: delegate.snapConfiguration,
       stretchConfiguration: delegate.stretchConfiguration,
     );
@@ -232,16 +232,16 @@ class _ShrinkWrappedSliverFloatingPinnedPersistentHeader
   @override
   void updateRenderObject(
       BuildContext context,
-      _ShrinkWrappedRenderSliverFloatingPinnedPersistentHeaderForWidgets
+      _RenderSliverShrinkWrappedFloatingPinnedPersistentHeaderForWidgets
           renderObject) {
     renderObject.snapConfiguration = delegate.snapConfiguration;
     renderObject.stretchConfiguration = delegate.stretchConfiguration;
   }
 }
 
-class _ShrinkWrappedSliverFloatingPersistentHeader
-    extends _ShrinkWrappedSliverPersistentHeaderRenderObjectWidget {
-  const _ShrinkWrappedSliverFloatingPersistentHeader({
+class _SliverShrinkWrappedFloatingPersistentHeader
+    extends _SliverShrinkWrappedPersistentHeaderRenderObjectWidget {
+  const _SliverShrinkWrappedFloatingPersistentHeader({
     Key key,
     @required SliverPersistentHeaderDelegate delegate,
   }) : super(
@@ -250,9 +250,9 @@ class _ShrinkWrappedSliverFloatingPersistentHeader
         );
 
   @override
-  _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin createRenderObject(
+  _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin createRenderObject(
       BuildContext context) {
-    return _ShrinkWrappedRenderSliverFloatingPersistentHeaderForWidgets(
+    return _RenderSliverShrinkWrappedFloatingPersistentHeaderForWidgets(
       snapConfiguration: delegate.snapConfiguration,
       stretchConfiguration: delegate.stretchConfiguration,
     );
@@ -261,17 +261,17 @@ class _ShrinkWrappedSliverFloatingPersistentHeader
   @override
   void updateRenderObject(
       BuildContext context,
-      _ShrinkWrappedRenderSliverFloatingPersistentHeaderForWidgets
+      _RenderSliverShrinkWrappedFloatingPersistentHeaderForWidgets
           renderObject) {
     renderObject.snapConfiguration = delegate.snapConfiguration;
     renderObject.stretchConfiguration = delegate.stretchConfiguration;
   }
 }
 
-class _ShrinkWrappedRenderSliverScrollingPersistentHeaderForWidgets
+class _RenderSliverShrinkWrappedScrollingPersistentHeaderForWidgets
     extends RenderSliverScrollingPersistentHeader
-    with _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin {
-  _ShrinkWrappedRenderSliverScrollingPersistentHeaderForWidgets({
+    with _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin {
+  _RenderSliverShrinkWrappedScrollingPersistentHeaderForWidgets({
     RenderBox child,
     OverScrollHeaderStretchConfiguration stretchConfiguration,
   }) : super(
@@ -280,10 +280,10 @@ class _ShrinkWrappedRenderSliverScrollingPersistentHeaderForWidgets
         );
 }
 
-class _ShrinkWrappedRenderSliverPinnedPersistentHeaderForWidgets
+class _RenderSliverShrinkWrappedPinnedPersistentHeaderForWidgets
     extends RenderSliverPinnedPersistentHeader
-    with _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin {
-  _ShrinkWrappedRenderSliverPinnedPersistentHeaderForWidgets({
+    with _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin {
+  _RenderSliverShrinkWrappedPinnedPersistentHeaderForWidgets({
     RenderBox child,
     OverScrollHeaderStretchConfiguration stretchConfiguration,
   }) : super(
@@ -292,10 +292,10 @@ class _ShrinkWrappedRenderSliverPinnedPersistentHeaderForWidgets
         );
 }
 
-class _ShrinkWrappedRenderSliverFloatingPinnedPersistentHeaderForWidgets
+class _RenderSliverShrinkWrappedFloatingPinnedPersistentHeaderForWidgets
     extends RenderSliverFloatingPinnedPersistentHeader
-    with _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin {
-  _ShrinkWrappedRenderSliverFloatingPinnedPersistentHeaderForWidgets({
+    with _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin {
+  _RenderSliverShrinkWrappedFloatingPinnedPersistentHeaderForWidgets({
     RenderBox child,
     FloatingHeaderSnapConfiguration snapConfiguration,
     OverScrollHeaderStretchConfiguration stretchConfiguration,
@@ -306,10 +306,10 @@ class _ShrinkWrappedRenderSliverFloatingPinnedPersistentHeaderForWidgets
         );
 }
 
-class _ShrinkWrappedRenderSliverFloatingPersistentHeaderForWidgets
+class _RenderSliverShrinkWrappedFloatingPersistentHeaderForWidgets
     extends RenderSliverFloatingPersistentHeader
-    with _ShrinkWrappedRenderSliverPersistentHeaderForWidgetsMixin {
-  _ShrinkWrappedRenderSliverFloatingPersistentHeaderForWidgets({
+    with _RenderSliverShrinkWrappedPersistentHeaderForWidgetsMixin {
+  _RenderSliverShrinkWrappedFloatingPersistentHeaderForWidgets({
     RenderBox child,
     FloatingHeaderSnapConfiguration snapConfiguration,
     OverScrollHeaderStretchConfiguration stretchConfiguration,

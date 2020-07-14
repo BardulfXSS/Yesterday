@@ -3,10 +3,8 @@ import 'package:flutter/widgets.dart';
 
 class SnapListener extends StatefulWidget {
   final Widget child;
-  final ScrollController controller;
 
-  SnapListener({Key key, @required this.child, @required this.controller})
-      : super(key: key);
+  SnapListener({Key key, @required this.child}) : super(key: key);
 
   @override
   _SnapListenerState createState() => _SnapListenerState();
@@ -40,27 +38,27 @@ class _SnapListenerState extends State<SnapListener> {
         .findAncestorRenderObjectOfType<RenderSliverFloatingPersistentHeader>();
   }
 
-  void _isScrollingListener() {
+  Future<void> _isScrollingListener() async {
     if (_position == null) return;
 
     // When a scroll stops, then maybe snap into view.
     // Similarly, when a scroll starts, then maybe stop the snap animation.
     final RenderSliverFloatingPersistentHeader header = _headerRenderer();
-    if (_position.isScrollingNotifier.value)
+    if (_position.isScrollingNotifier.value) {
       header?.maybeStopSnapAnimation(_position.userScrollDirection);
-    else {
-      final header = _headerRenderer();
-      if (0 < _position.extentBefore &&
+    } else {
+      if (header.snapConfiguration != null &&
+          header.minExtent < _position.extentBefore &&
           _position.extentBefore < header.maxExtent) {
         if (_position.userScrollDirection == ScrollDirection.reverse) {
-          widget.controller.animateTo(
+          _position.animateTo(
             header.maxExtent,
             duration: header.snapConfiguration.duration,
             curve: header.snapConfiguration.curve,
           );
         } else if (_position.userScrollDirection == ScrollDirection.forward) {
-          widget.controller.animateTo(
-            0,
+          _position.animateTo(
+            header.minExtent,
             duration: header.snapConfiguration.duration,
             curve: header.snapConfiguration.curve,
           );
